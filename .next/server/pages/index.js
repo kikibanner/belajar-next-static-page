@@ -17,6 +17,21 @@ module.exports = {
 
 /***/ }),
 
+/***/ 2500:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "f": () => (/* binding */ server)
+/* harmony export */ });
+const dev = (/* unused pure expression or super */ null && ("production" !== 'production'));
+/* export const server = dev 
+                        ? 'http://localhost:3000'
+                        : 'http://localhost:3000' */ const server = 'http://localhost:3000';
+
+
+/***/ }),
+
 /***/ 35:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -32,8 +47,6 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: external "react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__(997);
-// EXTERNAL MODULE: ./data.js
-var data = __webpack_require__(9132);
 // EXTERNAL MODULE: ./config/index.js
 var config = __webpack_require__(2500);
 // EXTERNAL MODULE: ./node_modules/next/link.js
@@ -86,7 +99,6 @@ const ArticleList = ({ articles  })=>{
 
 
 
-
 function Home({ articles  }) {
     return(/*#__PURE__*/ jsx_runtime_.jsx("div", {
         children: /*#__PURE__*/ jsx_runtime_.jsx(components_ArticleList, {
@@ -95,22 +107,13 @@ function Home({ articles  }) {
     }));
 };
 const getStaticProps = async ()=>{
-    const dev = "production" !== 'production';
-    if (dev) {
-        const res = await fetch(`${config/* server */.f}/api/articles`);
-        const articles = await res.json();
-        return {
-            props: {
-                articles
-            }
-        };
-    } else {
-        return {
-            props: {
-                data: data/* data */.a
-            }
-        };
-    }
+    const res = await fetch(`${config/* server */.f}/api/articles`);
+    const articles = await res.json();
+    return {
+        props: {
+            articles
+        }
+    };
 } /* export const getStaticProps = async () => {
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=6`)
   const articles = await res.json()
@@ -260,7 +263,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [730,664,756], () => (__webpack_exec__(35)));
+var __webpack_exports__ = __webpack_require__.X(0, [730,664], () => (__webpack_exec__(35)));
 module.exports = __webpack_exports__;
 
 })();
