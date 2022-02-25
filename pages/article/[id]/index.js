@@ -1,3 +1,4 @@
+import {data} from '../../../data'
 import Meta from "../../../components/Meta"
 import { server } from "../../../config"
 import Link from "next/link"
@@ -20,33 +21,62 @@ const article = ({article}) => {
 
 // UNTUK STATIC PAGE
 export const getStaticProps = async (context) => {
-    const res = await fetch(`${server}/api/articles/${context.params.id}`)
+    const dev = process.env.NODE_ENV !== 'production'
 
-    const article = await res.json()
-
-    return {
-        props: {
-            article
+    if (dev) {
+        const res = await fetch(`${server}/api/articles/${context.params.id}`)
+    
+        const article = await res.json()
+    
+        return {
+            props: {
+                article
+            }
+        }
+    }  else {
+        const filtered = data.filter(article => article.id === context.params.id)
+        return {
+            props: {
+                filtered
+            }
         }
     }
 }
 
 export const getStaticPaths = async () => {
-    const res = await fetch(`${server}/api/articles`)
+    const dev = process.env.NODE_ENV !== 'production'
 
-    const articles = await res.json()
+    if (dev) {
+        const res = await fetch(`${server}/api/articles`)
 
-    const ids = articles.map(article => article.id)
-    const paths = ids.map(id => ({
-        params: {
-            id: id.toString()
+        const articles = await res.json()
+    
+        const ids = articles.map(article => article.id)
+        const paths = ids.map(id => ({
+            params: {
+                id: id.toString()
+            }
+        }))
+    
+        return {
+            paths,
+            fallback: false
         }
-    }))
-
-    return {
-        paths,
-        fallback: false
+    }  else {
+        const ids = data.map(article => article.id)
+        const paths = ids.map(id => ({
+            params: {
+                id: id.toString()
+            }
+        }))
+    
+        return {
+            paths,
+            fallback: false
+        }
     }
+
+    
 }
 
 

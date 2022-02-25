@@ -1,6 +1,6 @@
+import {data} from '../data'
 import { server } from '../config'
 import ArticleList from '../components/ArticleList'
-
 
 export default function Home({ articles }) {
   return (
@@ -11,14 +11,25 @@ export default function Home({ articles }) {
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/articles`)
-  const articles = await res.json()
+  const dev = process.env.NODE_ENV !== 'production'
+  if (dev) {
+    const res = await fetch(`${server}/api/articles`)
+    const articles = await res.json()
 
-  return {
-    props: {
-      articles
+    return {
+      props: {
+        articles
+      }
     }
+  }  else {
+      return {
+        props: {
+          data
+        }
+      }
   }
+
+  
 }
  
 /* export const getStaticProps = async () => {
