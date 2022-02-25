@@ -3,9 +3,10 @@ import { server } from '../config'
 import ArticleList from '../components/ArticleList'
 
 export default function Home({ articles }) {
+  const dev = process.env.NODE_ENV !== 'production'
   return (
     <div>
-      <ArticleList articles={articles} />
+      <ArticleList articles={dev ? articles : data} />
     </div>
   )
 }
